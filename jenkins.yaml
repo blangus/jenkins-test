@@ -1,0 +1,64 @@
+jenkins:
+  authorizationStrategy:
+    globalMatrix:
+      permissions:
+      - "Job/Build:authenticated"
+      - "Job/Cancel:authenticated"
+      - "Job/Configure:authenticated"
+      - "Job/Create:authenticated"
+      - "Job/Read:authenticated"
+      - "Job/Workspace:authenticated"
+      - "Overall/Administer:admin"
+      - "Overall/Read:anonymous"
+      - "Overall/Read:authenticated"
+  disableRememberMe: false
+  primaryView:
+    all:
+      name: "all"
+  systemMessage: |-
+    Powered automagically by Groovy and Configuration-as-Code Plugin
+
+    Don't make manual changes, they will be removed on the next ansible run.
+  remotingSecurity:
+    enabled: true
+
+security:
+  apiToken:
+    creationOfLegacyTokenEnabled: false
+    tokenGenerationOnCreationEnabled: false
+    usageStatisticsEnabled: true
+  globalJobDslSecurityConfiguration:
+    useScriptSecurity: false
+  sSHD:
+    port: -1
+
+
+unclassified:
+  location:
+    adminAddress: "Mark Maas <mark.maas@schiphol.nl>"
+    url: "http://jenkins.local/"
+
+
+jobs:
+  - script: >
+      folder('admin') {
+        displayName('Admin')
+        description('Folder Admin jobs')
+      }
+
+      job('admin/Seeding') {
+        scm {
+          git('git://github.com/blangus/jenkins-test.git')
+          // This would download the base ansible
+        }
+        triggers {
+            scm('H/15 * * * *')
+        }
+        steps {
+          jobDsl {
+            targets('*.groovy')
+          }
+        }
+      }
+
+      queue('admin/Seeding')
