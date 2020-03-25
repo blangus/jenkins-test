@@ -56,7 +56,7 @@ jobs:
         }
         steps {
           jobDsl {
-            targets('*.groovy')
+            targets('groovy/*.groovy')
           }
         }
       }
