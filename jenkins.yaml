@@ -37,7 +37,10 @@ unclassified:
   location:
     adminAddress: "Mark Maas <mark.maas@schiphol.nl>"
     url: "http://jenkins.local/"
-
+  gitscm:
+    globalConfigName: jenkins
+    globalConfigEmail: jenkins@domain.local
+    createAccountBasedOnEmail: true
 
 jobs:
   - script: >
