@@ -1,5 +1,5 @@
 job('example') {
   steps {
-    shell('echo Test 2!')
+    shell('echo Test 3!')
   }
 }
