@@ -1,7 +1,9 @@
 pipelineJob('pipeline') {
     
     parameters {
-        stringParam('myParameterName', 'my default stringParam value', 'my description')
+        stringParam('TARGET_BUILD_VERSION', '', 'Version of the container to build')
+        stringParam('SOURCE_GIT_URL', '', 'Source of the git repository to build')
+        stringParam('QUAY_BEARER_TOKEN', '', '')
     }
 
     definition {
