@@ -35,6 +35,7 @@ handlebars
 icon-shim
 jdk-tool
 job-dsl
+kubernetes
 matrix-auth
 matrix-project
 maven-plugin

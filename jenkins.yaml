@@ -21,6 +21,30 @@ jenkins:
     Don't make manual changes, they will be removed on the next ansible run.
   remotingSecurity:
     enabled: true
+  clouds:
+    - kubernetes:
+        name: "kubernetes"
+        serverUrl: "https://127.0.0.1"
+        serverCertificate: ""
+        skipTlsVerify: true
+        credentialsId: "Kubernetes Token"
+        namespace: "ci"
+        jenkinsUrl: "http://127.0.0.1"
+        jenkinsTunnel: "127.0.0.1:50000"
+        containerCapStr: 10
+        maxRequestsPerHostStr: 64
+        retentionTimeout: 5
+        connectTimeout: 5
+        readTimeout: 15
+
+credentials:
+  system:
+    domainCredentials:
+    - credentials:
+      - string:
+          id: "Kubernetes Token"
+          secret: "Sample credentials of exampleuser"
+          scope: GLOBAL
 
 security:
   apiToken:
@@ -41,6 +65,7 @@ unclassified:
     globalConfigName: jenkins
     globalConfigEmail: jenkins@domain.local
     createAccountBasedOnEmail: true
+
 
 jobs:
   - script: >
