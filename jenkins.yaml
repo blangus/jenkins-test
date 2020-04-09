@@ -16,8 +16,10 @@ jenkins:
     all:
       name: "all"
   systemMessage: |-
+    Platform Team
+          
     Powered automagically by Groovy and Configuration-as-Code Plugin
-
+    
     Don't make manual changes, they will be removed on the next ansible run.
   remotingSecurity:
     enabled: true
@@ -43,8 +45,14 @@ credentials:
     - credentials:
       - string:
           id: "Kubernetes Token"
-          secret: "Sample credentials of exampleuser"
+          secret: "examplesecret"
           scope: GLOBAL
+      - usernamePassword:
+          scope: GLOBAL
+          id: "gitkey"
+          username: "some-user"
+          password: "foo" #${SomeUserPassword} #Load from Environment Variable
+          description: "Username/Password Credentials for some-user"
 
 security:
   apiToken:
@@ -59,7 +67,7 @@ security:
 
 unclassified:
   location:
-    adminAddress: "Mark Maas <mark.maas@schiphol.nl>"
+    adminAddress: "platform team <platformteam@schiphol.nl>"
     url: "http://jenkins.local/"
   gitscm:
     globalConfigName: jenkins
@@ -76,9 +84,14 @@ jobs:
 
       job('admin/Seeding') {
         scm {
-          git('git://github.com/blangus/jenkins-test.git')
-          // This would download the base ansible
+          git {
+            remote {
+              url('https://bitbucket.org/foo/jenkinstest')
+              credentials('gitkey')
+            }
+          }
         }
+
         triggers {
             scm('H/15 * * * *')
         }
@@ -87,6 +100,8 @@ jobs:
             targets('groovy/*.groovy')
           }
         }
-      }
+      } 
 
       queue('admin/Seeding')
+
+
