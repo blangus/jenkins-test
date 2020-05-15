@@ -19,6 +19,7 @@ credentials
 credentials-binding
 dashboard-view
 display-url-api
+docker-plugin
 docker-commons
 docker-workflow
 durable-task

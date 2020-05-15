@@ -38,6 +38,22 @@ jenkins:
         retentionTimeout: 5
         connectTimeout: 5
         readTimeout: 15
+    - docker:
+        name: "docker"
+        dockerApi:
+          dockerHost:
+            uri: "tcp://127.0.0.1:2375"
+        templates:
+          - labelString: "ansible-lint"
+            dockerTemplateBase:
+              image: "blangus/ansible-lint-slave:0.1"
+            remoteFs: "/home/jenkins"
+            connector:
+              attach:
+                user: "jenkins"
+            instanceCapStr: "10"
+            retentionStrategy:
+              idleMinutes: 1
 
 credentials:
   system:
@@ -53,6 +69,10 @@ credentials:
           username: "some-user"
           password: "foo" #${SomeUserPassword} #Load from Environment Variable
           description: "Username/Password Credentials for some-user"
+      - string:
+          id: "slack"
+          secret: "examplesecret"
+          scope: GLOBAL
 
 security:
   apiToken:
@@ -73,7 +93,9 @@ unclassified:
     globalConfigName: jenkins
     globalConfigEmail: jenkins@domain.local
     createAccountBasedOnEmail: true
-
+  slackNotifier:
+    teamDomain: iron-flower # i.e. your-company (just the workspace name not the full url)
+    tokenCredentialId: slack
 
 jobs:
   - script: >
