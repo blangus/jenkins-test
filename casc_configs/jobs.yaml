@@ -1,0 +1,28 @@
+jobs:
+  - script: >
+      folder('admin') {
+        displayName('Admin')
+        description('Folder Admin jobs')
+      }
+
+      job('admin/Seeding') {
+        scm {
+          git {
+            remote {
+              url('https://bitbucket.org/foo/jenkinstest')
+              credentials('gitkey')
+            }
+          }
+        }
+
+        triggers {
+            scm('H/15 * * * *')
+        }
+        steps {
+          jobDsl {
+            targets('groovy/*.groovy')
+          }
+        }
+      }
+
+      queue('admin/Seeding')

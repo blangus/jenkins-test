@@ -1,0 +1,11 @@
+unclassified:
+  location:
+    adminAddress: "platform team <platformteam@schiphol.nl>"
+    url: "http://jenkins.local/"
+  gitscm:
+    globalConfigName: jenkins
+    globalConfigEmail: jenkins@domain.local
+    createAccountBasedOnEmail: true
+  slackNotifier:
+    teamDomain: iron-flower # i.e. your-company (just the workspace name not the full url)
+    tokenCredentialId: slack
