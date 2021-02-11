@@ -25,22 +25,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      - name: Build image from Dockerfile
+      - name: Build Jenkins image from Dockerfile
         run: |
           docker build -t blangus/jenkinstest:1.0 .
-          
-      - name: Run Trivy scanner 
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: 'blangus/jenkinstest:1.0'
-          exit-code: 0
-          severity: UNKNOWN,LOW,MEDIUM
 
-      - name: Run Trivy scanner 
+      - name: Run Trivy scanner and fail on HIGH and CRITICAL vulns.
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'blangus/jenkinstest:1.0'
