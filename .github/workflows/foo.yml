@@ -31,4 +31,4 @@ jobs:
 
       - name: Build image from Dockerfile
         run: |
-          docker build -t .
+          docker build .
